@@ -1,0 +1,51 @@
+{
+  "sensitivity": 0.0,
+  "specificity": 1.0,
+  "roc_auc": 0.8990632009499934,
+  "pr_auc": 0.9211830826662992,
+  "false_positive_windows_per_hour": 0.0,
+  "threshold": 0.95,
+  "n_test_windows": 710,
+  "n_test_preictal": 424,
+  "validation_threshold": 0.95,
+  "validation_metrics_at_threshold": {
+    "sensitivity": 0.05156537753222836,
+    "specificity": 0.6394557823129252,
+    "roc_auc": 0.10665113190764336,
+    "pr_auc": 0.6185477661592782,
+    "false_positive_windows_per_hour": 259.59183673469386,
+    "threshold": 0.95,
+    "n_test_windows": 690,
+    "n_test_preictal": 543
+  },
+  "bands_hz": [
+    [
+      0.5,
+      4.0
+    ],
+    [
+      4.0,
+      8.0
+    ],
+    [
+      8.0,
+      13.0
+    ],
+    [
+      13.0,
+      30.0
+    ],
+    [
+      30.0,
+      50.0
+    ]
+  ],
+  "validation_recordings": [
+    "chb01_16.edf",
+    "chb01_18.edf"
+  ],
+  "test_recordings": [
+    "chb01_21.edf",
+    "chb01_26.edf"
+  ]
+}

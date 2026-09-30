@@ -1,0 +1,35 @@
+# Python virtual environments & caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Large Preprocessed EEG Datasets (Multi-Gigabyte HDF5 / NPZ)
+output/preprocessed/
+output/preprocessed_global_v2/
+output/labram_preprocessed/
+output/*/*.h5
+output/*/*.npz
+*.h5
+*.hdf5
+*.npz
+
+# Model weights & large serialized artifacts (>100MB exceeds GitHub push limits)
+*.pt
+*.pth
+*.bin
+*.joblib
+*.pkl
+
+# Preserved experiment outputs (track reports and metric JSONs)
+!output/*.json
+!output/*/*.json
+!output/pdf/*.pdf
+
+# Temporary files
+tmp/
+*.log
+.DS_Store
+Thumbs.db

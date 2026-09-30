@@ -1,0 +1,27 @@
+{
+  "sensitivity": 0.054426705370101594,
+  "specificity": 0.944669687574529,
+  "roc_auc": 0.4388291974402473,
+  "pr_auc": 0.046392731940200715,
+  "false_positive_windows_per_hour": 39.83782494633913,
+  "threshold": 0.05,
+  "n_test_windows": 26536,
+  "n_test_preictal": 1378,
+  "train_subjects": [
+    "chb01",
+    "chb02"
+  ],
+  "validation_subject": "chb03",
+  "test_subject": "chb05",
+  "validation_threshold": 0.05,
+  "validation_metrics_at_threshold": {
+    "sensitivity": 0.462877030162413,
+    "specificity": 0.6386002576212967,
+    "roc_auc": 0.5945432053628266,
+    "pr_auc": 0.08395428091838242,
+    "false_positive_windows_per_hour": 260.2078145126664,
+    "threshold": 0.05,
+    "n_test_windows": 25014,
+    "n_test_preictal": 1724
+  }
+}

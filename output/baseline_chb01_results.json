@@ -1,0 +1,19 @@
+{
+  "sensitivity": 0.0,
+  "specificity": 1.0,
+  "roc_auc": 0.770541958041958,
+  "pr_auc": 0.7979744687999374,
+  "false_positive_windows_per_hour": 0.0,
+  "threshold": 0.95,
+  "n_test_windows": 710,
+  "n_test_preictal": 424,
+  "validation_threshold": 0.95,
+  "validation_recordings": [
+    "chb01_16.edf",
+    "chb01_18.edf"
+  ],
+  "test_recordings": [
+    "chb01_21.edf",
+    "chb01_26.edf"
+  ]
+}

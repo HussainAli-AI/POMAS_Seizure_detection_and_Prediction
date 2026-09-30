@@ -1,0 +1,64 @@
+{
+  "fold": 5,
+  "test_cluster": 5,
+  "validation_cluster": 1,
+  "validation_recordings": [
+    "chb01_03.edf",
+    "chb01_04.edf"
+  ],
+  "test_recordings": [
+    "chb01_26.edf",
+    "chb01_29.edf"
+  ],
+  "n_train": 5528,
+  "n_validation": 1016,
+  "n_test": 934,
+  "train_counts": [
+    4146,
+    1382
+  ],
+  "validation_counts": [
+    298,
+    718
+  ],
+  "test_counts": [
+    574,
+    360
+  ],
+  "seed": 46,
+  "epochs": 3,
+  "best_validation_loss": 0.8355423789471388,
+  "score_type": "svm_decision_function",
+  "validation": {
+    "sensitivity": 0.9818941504178273,
+    "specificity": 0.07718120805369127,
+    "roc_auc": 0.41180759380082627,
+    "pr_auc": 0.6508160768125667,
+    "false_positive_windows_per_hour": 664.4295302013423,
+    "threshold": -0.9202619239443903,
+    "n_windows": 1016,
+    "n_preictal": 718,
+    "true_positives": 705,
+    "true_negatives": 23,
+    "false_positives": 275,
+    "false_negatives": 13,
+    "interictal_hours": 0.41388888888888886
+  },
+  "test": {
+    "sensitivity": 0.8944444444444445,
+    "specificity": 0.9477351916376306,
+    "roc_auc": 0.9848915989159892,
+    "pr_auc": 0.9784214485002946,
+    "false_positive_windows_per_hour": 37.63066202090592,
+    "threshold": -0.9202619239443903,
+    "n_windows": 934,
+    "n_preictal": 360,
+    "true_positives": 322,
+    "true_negatives": 544,
+    "false_positives": 30,
+    "false_negatives": 38,
+    "interictal_hours": 0.7972222222222223
+  },
+  "deep_feature_dim": 1280,
+  "correlation_feature_dim": 171
+}

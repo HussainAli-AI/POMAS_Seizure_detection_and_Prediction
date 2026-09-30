@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.4574468085106383,
+  "macro_f1": 0.5402931396691572,
+  "preictal_recall": 0.06367924528301887,
+  "validation_recordings": [
+    "chb01_18.edf"
+  ],
+  "test_recordings": [
+    "chb01_21.edf",
+    "chb01_26.edf"
+  ],
+  "best_validation_macro_f1": 0.6381704781704781,
+  "interictal_ratio": 3.0
+}

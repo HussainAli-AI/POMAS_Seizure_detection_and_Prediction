@@ -1,0 +1,340 @@
+{
+  "complete": true,
+  "configuration": {
+    "train_subjects": [
+      "chb01",
+      "chb02"
+    ],
+    "validation_subject": "chb03",
+    "test_subject": "chb05",
+    "epochs": 8,
+    "best_epoch": 5,
+    "batch_size_pairs": 16,
+    "samples_per_epoch_pairs": 12000,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "patient_loss_weight": 0.2,
+    "contrastive_loss_weight": 0.1,
+    "refractory_seconds": 1800.0,
+    "seed": 42,
+    "input_channels": 19,
+    "sample_rate": 256,
+    "window_seconds": 10,
+    "mfcc_coefficients": 13,
+    "mfcc_hop_length": 64,
+    "embedding_dim": 100,
+    "method_note": "PoMAS 19-channel/256-Hz adaptation retaining MFCC time maps; not an exact 23-channel reproduction of the cited paper."
+  },
+  "archives": [
+    {
+      "subject": "chb01",
+      "path": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\preprocessed_global_v2\\chb01_preprocessed_global_v2.h5",
+      "n_windows": 27118,
+      "n_interictal": 24558,
+      "n_preictal": 2460,
+      "n_ictal": 100,
+      "window_shape": [
+        19,
+        2560
+      ],
+      "label_timeline": "subject_global_summary_clock_v2"
+    },
+    {
+      "subject": "chb02",
+      "path": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\preprocessed_global_v2\\chb02_preprocessed_global_v2.h5",
+      "n_windows": 24494,
+      "n_interictal": 23377,
+      "n_preictal": 1077,
+      "n_ictal": 40,
+      "window_shape": [
+        19,
+        2560
+      ],
+      "label_timeline": "subject_global_summary_clock_v2"
+    },
+    {
+      "subject": "chb03",
+      "path": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\preprocessed_global_v2\\chb03_preprocessed_global_v2.h5",
+      "n_windows": 25054,
+      "n_interictal": 22750,
+      "n_preictal": 2211,
+      "n_ictal": 93,
+      "window_shape": [
+        19,
+        2560
+      ],
+      "label_timeline": "subject_global_summary_clock_v2"
+    },
+    {
+      "subject": "chb05",
+      "path": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\preprocessed_global_v2\\chb05_preprocessed_global_v2.h5",
+      "n_windows": 26250,
+      "n_interictal": 24333,
+      "n_preictal": 1796,
+      "n_ictal": 121,
+      "window_shape": [
+        19,
+        2560
+      ],
+      "label_timeline": "subject_global_summary_clock_v2"
+    }
+  ],
+  "validation": {
+    "window_metrics": {
+      "sensitivity": 0.05472636815920398,
+      "specificity": 0.9743736263736263,
+      "balanced_accuracy": 0.5145499972664151,
+      "roc_auc": 0.40791257498720185,
+      "pr_auc": 0.09041914475765797,
+      "false_positive_windows_per_hour": 18.450989010989012,
+      "threshold": 0.98828125,
+      "n_windows": 24961,
+      "n_preictal": 2211,
+      "true_positives": 121,
+      "true_negatives": 22167,
+      "false_positives": 583,
+      "false_negatives": 2090,
+      "interictal_hours": 31.59722222222222
+    },
+    "event_metrics": {
+      "preictal_episode_sensitivity": 0.3333333333333333,
+      "n_preictal_episodes": 9,
+      "n_detected_preictal_episodes": 3,
+      "n_alarm_events": 28,
+      "n_true_alarm_events": 3,
+      "n_false_alarm_events": 25,
+      "false_alarm_events_per_hour": 0.7912087912087912,
+      "refractory_seconds": 1800.0
+    }
+  },
+  "test": {
+    "window_metrics": {
+      "sensitivity": 0.0,
+      "specificity": 1.0,
+      "balanced_accuracy": 0.5,
+      "roc_auc": 0.5008019986605668,
+      "pr_auc": 0.0829043665524685,
+      "false_positive_windows_per_hour": 0.0,
+      "threshold": 0.98828125,
+      "n_windows": 26129,
+      "n_preictal": 1796,
+      "true_positives": 0,
+      "true_negatives": 24333,
+      "false_positives": 0,
+      "false_negatives": 1796,
+      "interictal_hours": 33.795833333333334
+    },
+    "event_metrics": {
+      "preictal_episode_sensitivity": 0.0,
+      "n_preictal_episodes": 7,
+      "n_detected_preictal_episodes": 0,
+      "n_alarm_events": 0,
+      "n_true_alarm_events": 0,
+      "n_false_alarm_events": 0,
+      "false_alarm_events_per_hour": 0.0,
+      "refractory_seconds": 1800.0
+    }
+  },
+  "training_history": [
+    {
+      "epoch": 1,
+      "losses": {
+        "loss": 0.571233751296997,
+        "seizure": 0.42783090633153914,
+        "patient": 0.3882540995279948,
+        "contrastive": 0.6575202319224676
+      },
+      "validation": {
+        "sensitivity": 0.037991858887381276,
+        "specificity": 0.9592527472527472,
+        "balanced_accuracy": 0.4986223030700643,
+        "roc_auc": 0.4065579097519396,
+        "pr_auc": 0.07332590764337024,
+        "false_positive_windows_per_hour": 29.338021978021978,
+        "threshold": 0.8603515625,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 84,
+        "true_negatives": 21823,
+        "false_positives": 927,
+        "false_negatives": 2127,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 2,
+      "losses": {
+        "loss": 0.31354659314950306,
+        "seizure": 0.21348252901434897,
+        "patient": 0.13403932062784832,
+        "contrastive": 0.7325619870821635
+      },
+      "validation": {
+        "sensitivity": 0.05472636815920398,
+        "specificity": 0.9484835164835165,
+        "balanced_accuracy": 0.5016049423213602,
+        "roc_auc": 0.37875867416165926,
+        "pr_auc": 0.07140143050813505,
+        "false_positive_windows_per_hour": 37.09186813186813,
+        "threshold": 0.94970703125,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 121,
+        "true_negatives": 21578,
+        "false_positives": 1172,
+        "false_negatives": 2090,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 3,
+      "losses": {
+        "loss": 0.22907779988646507,
+        "seizure": 0.14631910903255144,
+        "patient": 0.05681568209330241,
+        "contrastive": 0.7139555334250133
+      },
+      "validation": {
+        "sensitivity": 0.027137042062415198,
+        "specificity": 0.9894945054945055,
+        "balanced_accuracy": 0.5083157737784604,
+        "roc_auc": 0.3782490047266166,
+        "pr_auc": 0.07670206942226908,
+        "false_positive_windows_per_hour": 7.563956043956044,
+        "threshold": 0.9736328125,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 60,
+        "true_negatives": 22511,
+        "false_positives": 239,
+        "false_negatives": 2151,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 4,
+      "losses": {
+        "loss": 0.18981412252783775,
+        "seizure": 0.11470384188493093,
+        "patient": 0.030773399114608763,
+        "contrastive": 0.6895559962987899
+      },
+      "validation": {
+        "sensitivity": 0.02804161013116237,
+        "specificity": 0.9884395604395605,
+        "balanced_accuracy": 0.5082405852853614,
+        "roc_auc": 0.3944540335286603,
+        "pr_auc": 0.0763765571806313,
+        "false_positive_windows_per_hour": 8.323516483516483,
+        "threshold": 0.984375,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 62,
+        "true_negatives": 22487,
+        "false_positives": 263,
+        "false_negatives": 2149,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 5,
+      "losses": {
+        "loss": 0.1651116826136907,
+        "seizure": 0.09374427592257659,
+        "patient": 0.017751887599627175,
+        "contrastive": 0.6781702757279078
+      },
+      "validation": {
+        "sensitivity": 0.05472636815920398,
+        "specificity": 0.9743736263736263,
+        "balanced_accuracy": 0.5145499972664151,
+        "roc_auc": 0.40791257498720185,
+        "pr_auc": 0.09041914475765797,
+        "false_positive_windows_per_hour": 18.450989010989012,
+        "threshold": 0.98828125,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 121,
+        "true_negatives": 22167,
+        "false_positives": 583,
+        "false_negatives": 2090,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 6,
+      "losses": {
+        "loss": 0.15415022599697112,
+        "seizure": 0.08772355220715204,
+        "patient": 0.010026717290282249,
+        "contrastive": 0.6442132943868637
+      },
+      "validation": {
+        "sensitivity": 0.0407055630936228,
+        "specificity": 0.9754725274725274,
+        "balanced_accuracy": 0.5080890452830751,
+        "roc_auc": 0.3858999408551647,
+        "pr_auc": 0.07605366341591942,
+        "false_positive_windows_per_hour": 17.65978021978022,
+        "threshold": 0.9892578125,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 90,
+        "true_negatives": 22192,
+        "false_positives": 558,
+        "false_negatives": 2121,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 7,
+      "losses": {
+        "loss": 0.1350767010897398,
+        "seizure": 0.0712617492650946,
+        "patient": 0.00660525498787562,
+        "contrastive": 0.624938995997111
+      },
+      "validation": {
+        "sensitivity": 0.08276797829036635,
+        "specificity": 0.9356923076923077,
+        "balanced_accuracy": 0.5092301429913371,
+        "roc_auc": 0.3751830060486777,
+        "pr_auc": 0.07394441596322346,
+        "false_positive_windows_per_hour": 46.30153846153846,
+        "threshold": 0.990234375,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 183,
+        "true_negatives": 21287,
+        "false_positives": 1463,
+        "false_negatives": 2028,
+        "interictal_hours": 31.59722222222222
+      }
+    },
+    {
+      "epoch": 8,
+      "losses": {
+        "loss": 0.12983566782871883,
+        "seizure": 0.06802222053830823,
+        "patient": 0.005739646703004837,
+        "contrastive": 0.6066551668246587
+      },
+      "validation": {
+        "sensitivity": 0.03075531433740389,
+        "specificity": 0.9773626373626374,
+        "balanced_accuracy": 0.5040589758500207,
+        "roc_auc": 0.40095966719847315,
+        "pr_auc": 0.07432578795303071,
+        "false_positive_windows_per_hour": 16.298901098901098,
+        "threshold": 0.9951171875,
+        "n_windows": 24961,
+        "n_preictal": 2211,
+        "true_positives": 68,
+        "true_negatives": 22235,
+        "false_positives": 515,
+        "false_negatives": 2143,
+        "interictal_hours": 31.59722222222222
+      }
+    }
+  ]
+}

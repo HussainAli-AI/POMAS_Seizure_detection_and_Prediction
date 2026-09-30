@@ -1,0 +1,12 @@
+{
+  "accuracy": 0.7881607082567431,
+  "macro_f1": 0.3192968187629465,
+  "preictal_recall": 0.020319303338171262,
+  "train_subjects": [
+    "chb01",
+    "chb02"
+  ],
+  "validation_subject": "chb03",
+  "test_subject": "chb05",
+  "best_validation_macro_f1": 0.4860483733221021
+}

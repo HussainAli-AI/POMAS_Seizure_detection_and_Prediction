@@ -1,0 +1,288 @@
+{
+  "cluster_manifest": {
+    "subject": "chb01",
+    "data": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\preprocessed_global_v2\\chb01_preprocessed_global_v2.h5",
+    "label_timeline": "subject_global_summary_clock_v2",
+    "preictal_seconds": 1800,
+    "postictal_seconds": 1800,
+    "n_seizures": 7,
+    "n_clusters": 5,
+    "clusters": [
+      {
+        "context_start_seconds": 8406.0,
+        "context_end_seconds": 14112.0,
+        "seizures": [
+          {
+            "recording": "chb01_03.edf",
+            "onset_seconds": 10206.0,
+            "end_seconds": 10246.0,
+            "context_start_seconds": 8406.0,
+            "context_end_seconds": 12046.0
+          },
+          {
+            "recording": "chb01_04.edf",
+            "onset_seconds": 12285.0,
+            "end_seconds": 12312.0,
+            "context_start_seconds": 10485.0,
+            "context_end_seconds": 14112.0
+          }
+        ],
+        "cluster_id": 1,
+        "recordings": [
+          "chb01_03.edf",
+          "chb01_04.edf"
+        ],
+        "summary_recordings": [
+          "chb01_03.edf",
+          "chb01_04.edf"
+        ]
+      },
+      {
+        "context_start_seconds": 50442.0,
+        "context_end_seconds": 56983.0,
+        "seizures": [
+          {
+            "recording": "chb01_15.edf",
+            "onset_seconds": 52242.0,
+            "end_seconds": 52282.0,
+            "context_start_seconds": 50442.0,
+            "context_end_seconds": 54082.0
+          },
+          {
+            "recording": "chb01_16.edf",
+            "onset_seconds": 55132.0,
+            "end_seconds": 55183.0,
+            "context_start_seconds": 53332.0,
+            "context_end_seconds": 56983.0
+          }
+        ],
+        "cluster_id": 2,
+        "recordings": [
+          "chb01_14.edf",
+          "chb01_15.edf",
+          "chb01_16.edf"
+        ],
+        "summary_recordings": [
+          "chb01_14.edf",
+          "chb01_15.edf",
+          "chb01_16.edf"
+        ]
+      },
+      {
+        "context_start_seconds": 61252.0,
+        "context_end_seconds": 64942.0,
+        "seizures": [
+          {
+            "recording": "chb01_18.edf",
+            "onset_seconds": 63052.0,
+            "end_seconds": 63142.0,
+            "context_start_seconds": 61252.0,
+            "context_end_seconds": 64942.0
+          }
+        ],
+        "cluster_id": 3,
+        "recordings": [
+          "chb01_17.edf",
+          "chb01_18.edf",
+          "chb01_19.edf"
+        ],
+        "summary_recordings": [
+          "chb01_17.edf",
+          "chb01_18.edf",
+          "chb01_19.edf"
+        ]
+      },
+      {
+        "context_start_seconds": 69979.0,
+        "context_end_seconds": 73672.0,
+        "seizures": [
+          {
+            "recording": "chb01_21.edf",
+            "onset_seconds": 71779.0,
+            "end_seconds": 71872.0,
+            "context_start_seconds": 69979.0,
+            "context_end_seconds": 73672.0
+          }
+        ],
+        "cluster_id": 4,
+        "recordings": [
+          "chb01_20.edf",
+          "chb01_21.edf"
+        ],
+        "summary_recordings": [
+          "chb01_20.edf",
+          "chb01_21.edf"
+        ]
+      },
+      {
+        "context_start_seconds": 89550.0,
+        "context_end_seconds": 93251.0,
+        "seizures": [
+          {
+            "recording": "chb01_26.edf",
+            "onset_seconds": 91350.0,
+            "end_seconds": 91451.0,
+            "context_start_seconds": 89550.0,
+            "context_end_seconds": 93251.0
+          }
+        ],
+        "cluster_id": 5,
+        "recordings": [
+          "chb01_26.edf",
+          "chb01_29.edf"
+        ],
+        "summary_recordings": [
+          "chb01_26.edf",
+          "chb01_27.edf",
+          "chb01_29.edf"
+        ]
+      }
+    ]
+  },
+  "fold_plan": [
+    {
+      "fold": 1,
+      "test_cluster": 1,
+      "validation_cluster": 2,
+      "validation_recordings": [
+        "chb01_14.edf",
+        "chb01_15.edf",
+        "chb01_16.edf"
+      ],
+      "test_recordings": [
+        "chb01_03.edf",
+        "chb01_04.edf"
+      ],
+      "n_train": 4108,
+      "n_validation": 1567,
+      "n_test": 1016,
+      "train_counts": [
+        3081,
+        1027
+      ],
+      "validation_counts": [
+        852,
+        715
+      ],
+      "test_counts": [
+        298,
+        718
+      ]
+    },
+    {
+      "fold": 2,
+      "test_cluster": 2,
+      "validation_cluster": 3,
+      "validation_recordings": [
+        "chb01_17.edf",
+        "chb01_18.edf",
+        "chb01_19.edf"
+      ],
+      "test_recordings": [
+        "chb01_14.edf",
+        "chb01_15.edf",
+        "chb01_16.edf"
+      ],
+      "n_train": 5552,
+      "n_validation": 1780,
+      "n_test": 1567,
+      "train_counts": [
+        4164,
+        1388
+      ],
+      "validation_counts": [
+        1423,
+        357
+      ],
+      "test_counts": [
+        852,
+        715
+      ]
+    },
+    {
+      "fold": 3,
+      "test_cluster": 3,
+      "validation_cluster": 4,
+      "validation_recordings": [
+        "chb01_20.edf",
+        "chb01_21.edf"
+      ],
+      "test_recordings": [
+        "chb01_17.edf",
+        "chb01_18.edf",
+        "chb01_19.edf"
+      ],
+      "n_train": 7172,
+      "n_validation": 870,
+      "n_test": 1780,
+      "train_counts": [
+        5379,
+        1793
+      ],
+      "validation_counts": [
+        560,
+        310
+      ],
+      "test_counts": [
+        1423,
+        357
+      ]
+    },
+    {
+      "fold": 4,
+      "test_cluster": 4,
+      "validation_cluster": 5,
+      "validation_recordings": [
+        "chb01_26.edf",
+        "chb01_29.edf"
+      ],
+      "test_recordings": [
+        "chb01_20.edf",
+        "chb01_21.edf"
+      ],
+      "n_train": 7160,
+      "n_validation": 934,
+      "n_test": 870,
+      "train_counts": [
+        5370,
+        1790
+      ],
+      "validation_counts": [
+        574,
+        360
+      ],
+      "test_counts": [
+        560,
+        310
+      ]
+    },
+    {
+      "fold": 5,
+      "test_cluster": 5,
+      "validation_cluster": 1,
+      "validation_recordings": [
+        "chb01_03.edf",
+        "chb01_04.edf"
+      ],
+      "test_recordings": [
+        "chb01_26.edf",
+        "chb01_29.edf"
+      ],
+      "n_train": 5528,
+      "n_validation": 1016,
+      "n_test": 934,
+      "train_counts": [
+        4146,
+        1382
+      ],
+      "validation_counts": [
+        298,
+        718
+      ],
+      "test_counts": [
+        574,
+        360
+      ]
+    }
+  ]
+}

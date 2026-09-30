@@ -1,0 +1,13 @@
+{
+  "accuracy": 0.6932513035975542,
+  "macro_f1": 0.27758976966123605,
+  "preictal_recall": 0.0,
+  "train_subjects": [
+    "chb01",
+    "chb02"
+  ],
+  "validation_subject": "chb03",
+  "test_subject": "chb05",
+  "best_validation_macro_f1": 0.3310340977409227,
+  "pretrained_tensors_loaded": 219
+}

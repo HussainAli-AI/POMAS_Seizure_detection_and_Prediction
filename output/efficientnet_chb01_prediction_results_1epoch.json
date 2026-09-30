@@ -1,0 +1,37 @@
+{
+  "validation": {
+    "sensitivity": 0.0196078431372549,
+    "specificity": 0.8728039353478566,
+    "roc_auc": 0.3000427156104888,
+    "pr_auc": 0.13687307487156924,
+    "false_positive_windows_per_hour": 91.58116654954321,
+    "threshold": 0.95,
+    "n_windows": 1780,
+    "n_preictal": 357
+  },
+  "test": {
+    "sensitivity": 0.08208955223880597,
+    "specificity": 0.9798449612403101,
+    "roc_auc": 0.8576952447066991,
+    "pr_auc": 0.7229677578123733,
+    "false_positive_windows_per_hour": 14.511627906976743,
+    "threshold": 0.95,
+    "n_windows": 1960,
+    "n_preictal": 670
+  },
+  "validation_recordings": [
+    "chb01_17.edf",
+    "chb01_18.edf",
+    "chb01_19.edf"
+  ],
+  "test_recordings": [
+    "chb01_20.edf",
+    "chb01_21.edf",
+    "chb01_25.edf",
+    "chb01_26.edf",
+    "chb01_27.edf"
+  ],
+  "train_interictal_ratio": 3.0,
+  "deep_feature_dim": 1280,
+  "correlation_feature_dim": 171
+}
