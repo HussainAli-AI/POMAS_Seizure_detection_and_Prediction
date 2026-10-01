@@ -74,8 +74,13 @@ def score_metrics(y_true: np.ndarray, y_score: np.ndarray, threshold: float) -> 
     y_pred = (y_score >= threshold).astype(np.int64)
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel()
     interictal_hours = max((tn + fp) * STRIDE_SECONDS / 3600, 1e-12)
+    precision = float(tp / max(tp + fp, 1))
+    sensitivity = float(tp / max(tp + fn, 1))
+    f1 = float(2 * precision * sensitivity / max(precision + sensitivity, 1e-12))
     return {
-        "sensitivity": float(tp / max(tp + fn, 1)),
+        "f1": f1,
+        "precision": precision,
+        "sensitivity": sensitivity,
         "specificity": float(tn / max(tn + fp, 1)),
         "roc_auc": float(roc_auc_score(y_true, y_score)),
         "pr_auc": float(average_precision_score(y_true, y_score)),
@@ -86,14 +91,12 @@ def score_metrics(y_true: np.ndarray, y_score: np.ndarray, threshold: float) -> 
     }
 
 
-def choose_threshold(y_true: np.ndarray, y_score: np.ndarray, max_fpr_per_hour: float = 12.0) -> float:
-    """Choose on validation only: highest sensitivity under a window-level FPR cap."""
-    candidates = np.linspace(0.05, 0.95, 91)
-    feasible = [(score_metrics(y_true, y_score, t), float(t)) for t in candidates]
-    feasible = [(m, t) for m, t in feasible if m["false_positive_windows_per_hour"] <= max_fpr_per_hour]
-    if not feasible:
-        return min(candidates, key=lambda t: score_metrics(y_true, y_score, t)["false_positive_windows_per_hour"])
-    return max(feasible, key=lambda item: (item[0]["sensitivity"], item[0]["specificity"]))[1]
+def choose_threshold(y_true: np.ndarray, y_score: np.ndarray, criterion: str = "f1") -> float:
+    """Choose decision threshold strictly on validation set using F1 or Youden index."""
+    candidates = np.linspace(0.01, 0.99, 100)
+    if criterion == "f1":
+        return float(max(candidates, key=lambda t: score_metrics(y_true, y_score, t)["f1"]))
+    return float(max(candidates, key=lambda t: score_metrics(y_true, y_score, t)["sensitivity"] + score_metrics(y_true, y_score, t)["specificity"]))
 
 
 def train(h5_path: Path, validation_recordings: list[str], test_recordings: list[str], epochs: int, batch_size: int, learning_rate: float):

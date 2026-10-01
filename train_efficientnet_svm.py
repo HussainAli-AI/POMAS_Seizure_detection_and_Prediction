@@ -13,7 +13,13 @@ import h5py
 import joblib
 import numpy as np
 import torch
-from sklearn.metrics import average_precision_score, confusion_matrix, roc_auc_score, roc_curve
+from sklearn.metrics import (
+    average_precision_score,
+    confusion_matrix,
+    precision_recall_curve,
+    roc_auc_score,
+    roc_curve,
+)
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -64,8 +70,13 @@ def metrics(labels: np.ndarray, scores: np.ndarray, threshold: float) -> dict:
     predicted = (scores >= threshold).astype(np.int64)
     tn, fp, fn, tp = confusion_matrix(labels, predicted, labels=[0, 1]).ravel()
     interictal_hours = max((tn + fp) * STRIDE_SECONDS / 3600, 1e-12)
+    precision = float(tp / max(tp + fp, 1))
+    sensitivity = float(tp / max(tp + fn, 1))
+    f1 = float(2 * precision * sensitivity / max(precision + sensitivity, 1e-12))
     return {
-        "sensitivity": float(tp / max(tp + fn, 1)),
+        "f1": f1,
+        "precision": precision,
+        "sensitivity": sensitivity,
         "specificity": float(tn / max(tn + fp, 1)),
         "roc_auc": float(roc_auc_score(labels, scores)),
         "pr_auc": float(average_precision_score(labels, scores)),
@@ -81,14 +92,26 @@ def metrics(labels: np.ndarray, scores: np.ndarray, threshold: float) -> dict:
     }
 
 
-def select_threshold(labels: np.ndarray, scores: np.ndarray) -> float:
-    false_positive_rate, true_positive_rate, thresholds = roc_curve(labels, scores)
-    finite = np.isfinite(thresholds)
-    if not finite.any():
-        raise ValueError("No finite validation threshold is available")
-    finite_indices = np.flatnonzero(finite)
-    best = finite_indices[np.argmax((true_positive_rate - false_positive_rate)[finite])]
-    return float(thresholds[best])
+def select_threshold(labels: np.ndarray, scores: np.ndarray, criterion: str = "f1") -> float:
+    """Select decision threshold strictly on validation set.
+    
+    criterion='f1': selects threshold maximizing F1 score (ideal for imbalanced EEG data)
+    criterion='youden': selects threshold maximizing sensitivity + specificity - 1 (ROC point)
+    """
+    if criterion == "f1":
+        precisions, recalls, thresholds = precision_recall_curve(labels, scores)
+        denom = precisions + recalls
+        f1_scores = np.divide(2 * precisions * recalls, denom, out=np.zeros_like(denom), where=denom > 0)
+        best_idx = int(np.argmax(f1_scores[:-1])) if len(thresholds) > 0 else 0
+        return float(thresholds[best_idx])
+    else:
+        false_positive_rate, true_positive_rate, thresholds = roc_curve(labels, scores)
+        finite = np.isfinite(thresholds)
+        if not finite.any():
+            raise ValueError("No finite validation threshold is available")
+        finite_indices = np.flatnonzero(finite)
+        best = finite_indices[np.argmax((true_positive_rate - false_positive_rate)[finite])]
+        return float(thresholds[best])
 
 
 def correlation_features(windows: torch.Tensor) -> np.ndarray:

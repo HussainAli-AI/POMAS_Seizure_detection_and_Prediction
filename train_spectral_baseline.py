@@ -41,8 +41,10 @@ def extract(dataset: HDF5WindowDataset, batch_size: int = 32):
     return np.concatenate(features), np.concatenate(labels)
 
 
-def select_balanced_threshold(labels: np.ndarray, scores: np.ndarray) -> float:
-    candidates = np.linspace(0.05, 0.95, 91)
+def select_balanced_threshold(labels: np.ndarray, scores: np.ndarray, criterion: str = "f1") -> float:
+    candidates = np.linspace(0.01, 0.99, 100)
+    if criterion == "f1":
+        return float(max(candidates, key=lambda t: score_metrics(labels, scores, t)["f1"]))
     return float(max(
         candidates,
         key=lambda t: score_metrics(labels, scores, t)["sensitivity"] + score_metrics(labels, scores, t)["specificity"],
