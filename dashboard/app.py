@@ -30,6 +30,7 @@ from config import OUTPUT_DIR, SELECTED_CHANNELS, STRIDE_SECONDS
 DB_PATH = OUTPUT_DIR / "pomas_event_store.db"
 FIGURES_DIR = OUTPUT_DIR / "figures"
 MASTER_CSV_PATH = OUTPUT_DIR / "pomas_master_results_table.csv"
+REPORT_PDF_PATH = OUTPUT_DIR / "pomas_comprehensive_clinical_report.pdf"
 REPORT_HTML_PATH = OUTPUT_DIR / "pomas_comprehensive_clinical_report.html"
 REPORT_ZIP_PATH = OUTPUT_DIR / "pomas_complete_research_artifacts.zip"
 
@@ -121,9 +122,18 @@ st.sidebar.markdown("• **Monitoring Agent:** Consecutive suspicion filter\n•
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📥 Download Reports")
 
+if REPORT_PDF_PATH.exists():
+    st.sidebar.download_button(
+        label="📕 Download Report (PDF)",
+        data=REPORT_PDF_PATH.read_bytes(),
+        file_name="pomas_comprehensive_clinical_report.pdf",
+        mime="application/pdf",
+        help="Download publication-grade multi-page PDF report with all figures, heatmaps, and tables",
+    )
+
 if REPORT_HTML_PATH.exists():
     st.sidebar.download_button(
-        label="📄 Download Report (HTML)",
+        label="🌐 Download Report (HTML)",
         data=REPORT_HTML_PATH.read_bytes(),
         file_name="pomas_comprehensive_clinical_report.html",
         mime="text/html",
@@ -136,7 +146,7 @@ if REPORT_ZIP_PATH.exists():
         data=REPORT_ZIP_PATH.read_bytes(),
         file_name="pomas_complete_research_artifacts.zip",
         mime="application/zip",
-        help="Download HTML report + all 7 300-DPI publication figures + CSV & JSON tables",
+        help="Download PDF + HTML report + all 7 300-DPI publication figures + CSV & JSON tables",
     )
 
 if MASTER_CSV_PATH.exists():
@@ -538,29 +548,38 @@ elif mode == "📑 Comprehensive Report (Preview & Download)":
     st.subheader("PoMAS Comprehensive Clinical & Research Dissertation Report")
     st.markdown("Fully self-contained publication-grade document embedding all **7 high-resolution figures**, **Grad-CAM heatmaps**, **evaluation tables**, and **clinical neurological interpretations**.")
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
+        if REPORT_PDF_PATH.exists():
+            st.download_button(
+                label="📕 Download Report (PDF)",
+                data=REPORT_PDF_PATH.read_bytes(),
+                file_name="pomas_comprehensive_clinical_report.pdf",
+                mime="application/pdf",
+                use_container_width=True,
+            )
+    with col2:
         if REPORT_HTML_PATH.exists():
             st.download_button(
-                label="📥 Download Detailed Report (HTML)",
+                label="🌐 Download Report (HTML)",
                 data=REPORT_HTML_PATH.read_bytes(),
                 file_name="pomas_comprehensive_clinical_report.html",
                 mime="text/html",
                 use_container_width=True,
             )
-    with col2:
+    with col3:
         if REPORT_ZIP_PATH.exists():
             st.download_button(
-                label="📦 Download Full Artifact Bundle (ZIP)",
+                label="📦 Download Bundle (ZIP)",
                 data=REPORT_ZIP_PATH.read_bytes(),
                 file_name="pomas_complete_research_artifacts.zip",
                 mime="application/zip",
                 use_container_width=True,
             )
-    with col3:
+    with col4:
         if MASTER_CSV_PATH.exists():
             st.download_button(
-                label="📊 Download Master Table (CSV)",
+                label="📊 Download Table (CSV)",
                 data=MASTER_CSV_PATH.read_bytes(),
                 file_name="pomas_master_results_table.csv",
                 mime="text/csv",

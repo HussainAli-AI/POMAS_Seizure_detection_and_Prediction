@@ -26,13 +26,17 @@ output/*/*.npz
 # Preserved experiment outputs (track reports and metric JSONs, figures, summaries)
 !output/*.json
 !output/*/*.json
+!output/*.pdf
 !output/pdf/*.pdf
+!output/*.html
 !output/figures/*.png
 !output/*.csv
 !output/*.md
+!output/pomas_event_store.db
 
-# Databases & external models
+# Databases & external models (ignore other databases except pomas_event_store.db)
 *.db
+!output/pomas_event_store.db
 *.sqlite
 *.sqlite3
 epilepsy_trained_model/

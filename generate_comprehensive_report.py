@@ -588,6 +588,9 @@ ZIP_OUTPUT_PATH = OUTPUT_DIR / "pomas_complete_research_artifacts.zip"
 def build_zip_bundle() -> Path:
     """Package the standalone HTML report, figures, tables, and raw JSONs into a ZIP archive."""
     with zipfile.ZipFile(ZIP_OUTPUT_PATH, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        pdf_path = OUTPUT_DIR / "pomas_comprehensive_clinical_report.pdf"
+        if pdf_path.exists():
+            zf.write(pdf_path, arcname="pomas_comprehensive_clinical_report.pdf")
         if REPORT_OUTPUT_PATH.exists():
             zf.write(REPORT_OUTPUT_PATH, arcname="pomas_comprehensive_clinical_report.html")
         csv_path = OUTPUT_DIR / "pomas_master_results_table.csv"
