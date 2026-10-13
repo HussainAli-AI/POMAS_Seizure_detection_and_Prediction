@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
 
-DATASET_DIR = Path(r"D:\chb-mit-scalp-eeg-database-1.0.0\chb-mit-scalp-eeg-database-1.0.0")
-OUTPUT_DIR = Path(r"D:\chb-mit-scalp-eeg-database-1.0.0\pomas\output")
+BASE_DIR = Path(__file__).resolve().parent
+OUTPUT_DIR = Path(os.environ.get("POMAS_OUTPUT_DIR", BASE_DIR / "output"))
+DATASET_DIR = Path(os.environ.get("DATASET_DIR", r"D:\chb-mit-scalp-eeg-database-1.0.0\chb-mit-scalp-eeg-database-1.0.0"))
 
 SAMPLE_RATE = 256
 WINDOW_SECONDS = 10

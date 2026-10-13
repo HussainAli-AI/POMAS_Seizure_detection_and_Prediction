@@ -27,6 +27,12 @@ import matplotlib.pyplot as plt
 
 from config import OUTPUT_DIR, SELECTED_CHANNELS, STRIDE_SECONDS
 
+# Robust path resolution for Streamlit Cloud (Linux) and local environments
+if not OUTPUT_DIR.exists() or not (OUTPUT_DIR / "pomas_event_store.db").exists():
+    fallback_dir = ROOT_DIR / "output"
+    if fallback_dir.exists():
+        OUTPUT_DIR = fallback_dir
+
 DB_PATH = OUTPUT_DIR / "pomas_event_store.db"
 FIGURES_DIR = OUTPUT_DIR / "figures"
 MASTER_CSV_PATH = OUTPUT_DIR / "pomas_master_results_table.csv"
@@ -159,11 +165,21 @@ if MASTER_CSV_PATH.exists():
 
 
 def load_events_from_db(patient_id: str | None = None) -> pd.DataFrame:
-    if not DB_PATH.exists():
+    db_candidates = [
+        DB_PATH,
+        ROOT_DIR / "output" / "pomas_event_store.db",
+        Path("output/pomas_event_store.db"),
+    ]
+    db_file = next((p for p in db_candidates if p.exists()), None)
+    if not db_file:
         return pd.DataFrame()
-    conn = sqlite3.connect(str(DB_PATH))
+    conn = sqlite3.connect(str(db_file))
     if patient_id:
-        df = pd.read_sql_query("SELECT * FROM events WHERE patient_id = ? ORDER BY timestamp ASC", conn, params=(patient_id,))
+        df = pd.read_sql_query(
+            "SELECT * FROM events WHERE LOWER(patient_id) = LOWER(?) ORDER BY timestamp ASC",
+            conn,
+            params=(patient_id.strip(),),
+        )
     else:
         df = pd.read_sql_query("SELECT * FROM events ORDER BY timestamp ASC", conn)
     conn.close()
@@ -171,9 +187,15 @@ def load_events_from_db(patient_id: str | None = None) -> pd.DataFrame:
 
 
 def load_replay_summary(patient_id: str = "chb01") -> dict:
-    p = OUTPUT_DIR / f"replay_summary_{patient_id}.json"
-    if p.exists():
-        return json.loads(p.read_text(encoding="utf-8"))
+    pid = patient_id.strip().lower()
+    candidates = [
+        OUTPUT_DIR / f"replay_summary_{pid}.json",
+        ROOT_DIR / "output" / f"replay_summary_{pid}.json",
+        Path(f"output/replay_summary_{pid}.json"),
+    ]
+    for p in candidates:
+        if p.exists():
+            return json.loads(p.read_text(encoding="utf-8"))
     return {}
 
 
@@ -365,8 +387,13 @@ elif mode == "Multi-Patient Cohort Replay (Figure 7)":
     st.subheader("Multi-Patient Closed-Loop CEP Replay Comparison (Cohort: chb01, chb02, chb03)")
     st.markdown("Consolidated evidence proving that the **Autonomous Multi-Agent Architecture** successfully generalizes across multiple patients, suppressing alarm fatigue while maintaining **100% early warning sensitivity**.")
 
-    f7 = FIGURES_DIR / "fig7_multisubject_cep_replay_evaluation.png"
-    if f7.exists():
+    f7_candidates = [
+        FIGURES_DIR / "fig7_multisubject_cep_replay_evaluation.png",
+        ROOT_DIR / "output" / "figures" / "fig7_multisubject_cep_replay_evaluation.png",
+        Path("output/figures/fig7_multisubject_cep_replay_evaluation.png"),
+    ]
+    f7 = next((p for p in f7_candidates if p.exists()), None)
+    if f7:
         st.image(str(f7), width="stretch")
     else:
         st.warning("Figure 7 not found at output/figures/.")
