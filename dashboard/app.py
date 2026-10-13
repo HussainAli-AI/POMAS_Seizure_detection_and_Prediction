@@ -2,7 +2,7 @@
 
 Phase 6: Multi-Agent Closed-Loop EEG Monitoring & Clinical Decision Support.
 Driven directly by real replay outputs, SQLite EventStore, preprocessed EEG archives,
-and publication-grade XAI clinical interpretability reports across chb01, chb02, and chb03.
+publication-grade XAI clinical interpretability reports, and comprehensive downloadable reports.
 """
 
 from __future__ import annotations
@@ -22,6 +22,7 @@ import h5py
 import numpy as np
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 import matplotlib.pyplot as plt
 
 from config import OUTPUT_DIR, SELECTED_CHANNELS, STRIDE_SECONDS
@@ -29,6 +30,8 @@ from config import OUTPUT_DIR, SELECTED_CHANNELS, STRIDE_SECONDS
 DB_PATH = OUTPUT_DIR / "pomas_event_store.db"
 FIGURES_DIR = OUTPUT_DIR / "figures"
 MASTER_CSV_PATH = OUTPUT_DIR / "pomas_master_results_table.csv"
+REPORT_HTML_PATH = OUTPUT_DIR / "pomas_comprehensive_clinical_report.html"
+REPORT_ZIP_PATH = OUTPUT_DIR / "pomas_complete_research_artifacts.zip"
 
 # Configure Page
 st.set_page_config(
@@ -42,24 +45,24 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .main-header {
+    .main-header {{
         font-size: 2.2rem;
         font-weight: 700;
         color: #12355B;
         margin-bottom: 0px;
-    }
-    .sub-header {
+    }}
+    .sub-header {{
         font-size: 1.05rem;
         color: #52606D;
         margin-bottom: 20px;
-    }
-    .metric-card {
+    }}
+    .metric-card {{
         background-color: #F8FAFC;
         border-radius: 8px;
         padding: 15px;
         border-left: 5px solid #168AAD;
         box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
+    }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -96,6 +99,7 @@ mode = st.sidebar.radio(
         "Multi-Channel EEG Waveform",
         "Explainable AI (XAI) Clinical Reports",
         "Master Benchmark Evaluation Table",
+        "📑 Comprehensive Report (Preview & Download)",
     ],
     index=0,
 )
@@ -112,6 +116,36 @@ else:
 st.sidebar.markdown("---")
 st.sidebar.markdown("**System Architecture:**")
 st.sidebar.markdown("• **Monitoring Agent:** Consecutive suspicion filter\n• **Prediction Agent:** Tri-Modal SOTA / EfficientNet / GNN\n• **Alert Agent:** 3-Tier CEP (30m lockout)")
+
+# Sidebar Download Section
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 📥 Download Reports")
+
+if REPORT_HTML_PATH.exists():
+    st.sidebar.download_button(
+        label="📄 Download Report (HTML)",
+        data=REPORT_HTML_PATH.read_bytes(),
+        file_name="pomas_comprehensive_clinical_report.html",
+        mime="text/html",
+        help="Download standalone report with all figures, heatmaps, and tables embedded",
+    )
+
+if REPORT_ZIP_PATH.exists():
+    st.sidebar.download_button(
+        label="📦 Download Complete Bundle (ZIP)",
+        data=REPORT_ZIP_PATH.read_bytes(),
+        file_name="pomas_complete_research_artifacts.zip",
+        mime="application/zip",
+        help="Download HTML report + all 7 300-DPI publication figures + CSV & JSON tables",
+    )
+
+if MASTER_CSV_PATH.exists():
+    st.sidebar.download_button(
+        label="📊 Download Master Table (CSV)",
+        data=MASTER_CSV_PATH.read_bytes(),
+        file_name="pomas_master_results_table.csv",
+        mime="text/csv",
+    )
 
 
 def load_events_from_db(patient_id: str | None = None) -> pd.DataFrame:
@@ -495,3 +529,53 @@ elif mode == "Master Benchmark Evaluation Table":
         f4 = FIGURES_DIR / "fig4_model_comparison_barchart.png"
         if f4.exists():
             st.image(str(f4), caption="Figure 4: 4-Model Benchmark Progression", width="stretch")
+
+
+# -------------------------------------------------------------
+# View 7: Comprehensive Clinical & Research Report (Preview & Download)
+# -------------------------------------------------------------
+elif mode == "📑 Comprehensive Report (Preview & Download)":
+    st.subheader("PoMAS Comprehensive Clinical & Research Dissertation Report")
+    st.markdown("Fully self-contained publication-grade document embedding all **7 high-resolution figures**, **Grad-CAM heatmaps**, **evaluation tables**, and **clinical neurological interpretations**.")
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        if REPORT_HTML_PATH.exists():
+            st.download_button(
+                label="📥 Download Detailed Report (HTML)",
+                data=REPORT_HTML_PATH.read_bytes(),
+                file_name="pomas_comprehensive_clinical_report.html",
+                mime="text/html",
+                use_container_width=True,
+            )
+    with col2:
+        if REPORT_ZIP_PATH.exists():
+            st.download_button(
+                label="📦 Download Full Artifact Bundle (ZIP)",
+                data=REPORT_ZIP_PATH.read_bytes(),
+                file_name="pomas_complete_research_artifacts.zip",
+                mime="application/zip",
+                use_container_width=True,
+            )
+    with col3:
+        if MASTER_CSV_PATH.exists():
+            st.download_button(
+                label="📊 Download Master Table (CSV)",
+                data=MASTER_CSV_PATH.read_bytes(),
+                file_name="pomas_master_results_table.csv",
+                mime="text/csv",
+                use_container_width=True,
+            )
+
+    st.markdown("---")
+    st.info("💡 **Interactive Document Preview:** The full report below is self-contained with inline 300-DPI images. You can view all figures, heatmaps, and tables directly in your browser, or save it as a PDF using your browser's print command (`Ctrl + P` -> Save as PDF).")
+
+    if REPORT_HTML_PATH.exists():
+        html_content = REPORT_HTML_PATH.read_text(encoding="utf-8")
+        components.html(html_content, height=1400, scrolling=True)
+    else:
+        st.warning("Report file not found. Generating now...")
+        from generate_comprehensive_report import build_html_report, build_zip_bundle
+        build_html_report()
+        build_zip_bundle()
+        st.rerun()
