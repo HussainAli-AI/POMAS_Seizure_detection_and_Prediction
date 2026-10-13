@@ -33,6 +33,7 @@ output/*/*.npz
 !output/*.csv
 !output/*.md
 !output/pomas_event_store.db
+!output/sample_eeg_traces.npz
 
 # Databases & external models (ignore other databases except pomas_event_store.db)
 *.db
