@@ -210,8 +210,19 @@ if mode == "Clinical Overview & KPIs":
 
         st.subheader(f"Persistent SQLite Event Store (Live Queries for {clean_patient})")
         if not events_df.empty:
-            alerts_only = events_df[events_df["alert_tier"].notna()]
-            st.dataframe(alerts_only[["timestamp", "patient_id", "recording_id", "risk_score", "alert_tier", "clinical_action"]].tail(10), width="stretch")
+            alerts_only = events_df[events_df["alert_tier"].notna()].copy()
+            if not alerts_only.empty:
+                tier_actions = {
+                    "clinician_notify": "Immediate Bedside Paging (High Risk)",
+                    "ehr_flag": "Automated EHR Chart Entry (Moderate Risk)",
+                    "silent_log": "Silent Background Log (Low Risk)",
+                }
+                alerts_only["clinical_action"] = alerts_only["alert_tier"].map(tier_actions).fillna("Monitored")
+                alerts_only["elapsed_min"] = ((alerts_only["timestamp"] - events_df["timestamp"].iloc[0]) / 60.0).round(1)
+                cols = ["elapsed_min", "recording_id", "risk_score", "alert_tier", "clinical_action"]
+                st.dataframe(alerts_only[cols].tail(10), width="stretch")
+            else:
+                st.info(f"No alert events fired for {clean_patient} in SQLite DB.")
         else:
             st.info("No alert events recorded for this patient in SQLite DB.")
 
