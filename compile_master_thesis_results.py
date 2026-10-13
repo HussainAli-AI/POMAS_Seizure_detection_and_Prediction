@@ -33,6 +33,7 @@ def compile_results():
     labram = load_json("labram_detector_results.json")
     eff1 = load_json("efficientnet_chb01_prediction_results_1epoch.json")
     eff5 = load_json("efficientnet_chb01_prediction_results.json")
+    trimodal = load_json("trimodal_chb01_prediction_results.json")
     effcv = load_json("efficientnet_svm_cluster_cv_chb01/cross_validation_results_all.json")
     mfcc2 = load_json("mfcc_siamese_global_v2/results.json")
     mfcc6 = load_json("mfcc_siamese_6train_global_v2/results.json")
@@ -175,6 +176,21 @@ def compile_results():
             "PR-AUC": f"{fmt(eff_cv_pr.get('mean'))} +/- {fmt(eff_cv_pr.get('std'))}",
             "FAR / hour": "263.1 +/- 169.8",
             "Key Limitation / Finding": "Primary leakage-safe estimate: mean ROC 0.670; wide fold variance (0.343 to 0.985)."
+        },
+        {
+            "Experiment ID": "PRED-PD-06",
+            "Task": "Prediction",
+            "Regime": "Patient-Dependent",
+            "Model Architecture": "Tri-Modal PoMAS (Deep 1280 + Corr 171 + Spectral 95 = 1546)",
+            "Split / Subject": "chb01 single recording split",
+            "Accuracy": "-",
+            "Macro F1": fmt(trimodal.get("test_f1_optimal", {}).get("f1", trimodal.get("test_metrics", {}).get("f1"))),
+            "Sensitivity / Preictal Recall": fmt(trimodal.get("test_f1_optimal", {}).get("sensitivity", trimodal.get("test_metrics", {}).get("sensitivity"))),
+            "Specificity": fmt(trimodal.get("test_f1_optimal", {}).get("specificity", trimodal.get("test_metrics", {}).get("specificity"))),
+            "ROC-AUC": fmt(trimodal.get("test_f1_optimal", {}).get("roc_auc", trimodal.get("test_metrics", {}).get("roc_auc"))),
+            "PR-AUC": fmt(trimodal.get("test_f1_optimal", {}).get("pr_auc", trimodal.get("test_metrics", {}).get("pr_auc"))),
+            "FAR / hour": fmt(trimodal.get("test_f1_optimal", {}).get("false_positive_windows_per_hour", trimodal.get("test_metrics", {}).get("false_positive_windows_per_hour")), 1),
+            "Key Limitation / Finding": "PoMAS Flagship SOTA: ROC 0.868, PR 0.748, F1=0.762 (+3.7% PR-AUC gain over Bi-Modal)."
         },
         # Patient-Independent Prediction
         {

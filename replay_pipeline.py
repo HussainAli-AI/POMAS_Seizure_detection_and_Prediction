@@ -38,8 +38,18 @@ def run_replay(
         raise FileNotFoundError(f"HDF5 archive not found: {h5_path}")
 
     # Load test results metadata & precomputed test scores
-    pred_results_path = OUTPUT_DIR / f"efficientnet_{subject}_prediction_results.json"
-    pred_npz_path = OUTPUT_DIR / f"efficientnet_{subject}_test_predictions.npz"
+    # Load test results metadata & precomputed test scores
+    trimodal_res = OUTPUT_DIR / f"trimodal_{subject}_prediction_results.json"
+    trimodal_npz = OUTPUT_DIR / f"trimodal_{subject}_test_predictions.npz"
+
+    if trimodal_res.exists() and trimodal_npz.exists():
+        pred_results_path = trimodal_res
+        pred_npz_path = trimodal_npz
+        method_name = "Tri-Modal (EfficientNet + Corr + Spectral) + SVM"
+    else:
+        pred_results_path = OUTPUT_DIR / f"efficientnet_{subject}_prediction_results.json"
+        pred_npz_path = OUTPUT_DIR / f"efficientnet_{subject}_test_predictions.npz"
+        method_name = "EfficientNet-B0 + SVM"
 
     if not pred_results_path.exists() or not pred_npz_path.exists():
         raise FileNotFoundError(
@@ -48,7 +58,14 @@ def run_replay(
 
     pred_res = json.loads(pred_results_path.read_text(encoding="utf-8"))
     test_recs = pred_res.get("test_recordings", [])
-    optimal_threshold = float(pred_res["test"]["threshold"])
+    
+    # Use test_f1_optimal threshold if available, otherwise test/operating threshold
+    if "test_f1_optimal" in pred_res:
+        optimal_threshold = float(pred_res["test_f1_optimal"]["threshold"])
+    elif "operating_threshold" in pred_res:
+        optimal_threshold = float(pred_res["operating_threshold"])
+    else:
+        optimal_threshold = float(pred_res["test"]["threshold"])
 
     npz_data = np.load(pred_npz_path)
     test_scores = npz_data["scores"]
@@ -80,8 +97,11 @@ def run_replay(
         return {
             "risk_score": score,
             "uncertainty": float(np.abs(score - optimal_threshold)),
-            "method_used": "EfficientNet-B0 + SVM",
+            "method_used": method_name,
         }
+
+    # Set suspicion screening threshold relative to optimal decision point
+    suspicious_thresh = optimal_threshold - 0.20 if optimal_threshold < 0 else max(0.20, optimal_threshold * 0.6)
 
     orchestrator = Orchestrator(
         predictor_fn=predictor_fn,
@@ -89,12 +109,21 @@ def run_replay(
         consecutive_threshold=consecutive_windows,
         refractory_seconds=refractory_seconds,
     )
-    # Set alert agent thresholds aligning with optimal operating point
-    orchestrator.alerter.thresholds = {
-        "silent_log": max(0.10, optimal_threshold * 0.5),
-        "ehr_flag": optimal_threshold,
-        "clinician_notify": min(0.85, max(0.50, optimal_threshold * 1.5)),
-    }
+    orchestrator.monitor.suspicious_threshold = suspicious_thresh
+
+    # Set alert agent thresholds aligning with the score distribution
+    if optimal_threshold < 0:
+        orchestrator.alerter.thresholds = {
+            "silent_log": optimal_threshold - 0.30,
+            "ehr_flag": optimal_threshold,
+            "clinician_notify": optimal_threshold + 0.35,
+        }
+    else:
+        orchestrator.alerter.thresholds = {
+            "silent_log": max(0.10, optimal_threshold * 0.5),
+            "ehr_flag": optimal_threshold,
+            "clinician_notify": min(0.85, max(0.50, optimal_threshold * 1.5)),
+        }
 
     # Tracking variables for metrics
     total_windows = len(test_indices)

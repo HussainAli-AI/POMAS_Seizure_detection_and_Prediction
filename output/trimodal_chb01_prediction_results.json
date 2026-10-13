@@ -1,0 +1,74 @@
+{
+  "model_architecture": "Tri-Modal Feature Fusion (EfficientNet-B0 + Correlation + Welch Spectral Bandpowers)",
+  "feature_dimensions": {
+    "deep_spatial_dim": 1280,
+    "correlation_connectivity_dim": 171,
+    "welch_spectral_bandpower_dim": 95,
+    "total_dim": 1546
+  },
+  "validation_metrics": {
+    "f1": 0.3391812865497076,
+    "precision": 0.20530973451327433,
+    "sensitivity": 0.9747899159663865,
+    "specificity": 0.05340829234012649,
+    "roc_auc": 0.2957534384097982,
+    "pr_auc": 0.13668107820503042,
+    "false_positive_windows_per_hour": 681.5460295151089,
+    "threshold": -1.637016302026645,
+    "n_windows": 1780,
+    "n_preictal": 357,
+    "true_positives": 348,
+    "true_negatives": 76,
+    "false_positives": 1347,
+    "false_negatives": 9,
+    "interictal_hours": 1.976388888888889
+  },
+  "test_metrics": {
+    "f1": 0.6086956521739131,
+    "precision": 0.44536652835408025,
+    "sensitivity": 0.9611940298507463,
+    "specificity": 0.37829457364341085,
+    "roc_auc": 0.86805507346986,
+    "pr_auc": 0.7478952965027637,
+    "false_positive_windows_per_hour": 447.62790697674416,
+    "threshold": -1.637016302026645,
+    "n_windows": 1960,
+    "n_preictal": 670,
+    "true_positives": 644,
+    "true_negatives": 488,
+    "false_positives": 802,
+    "false_negatives": 26,
+    "interictal_hours": 1.7916666666666667
+  },
+  "validation_recordings": [
+    "chb01_17.edf",
+    "chb01_18.edf",
+    "chb01_19.edf"
+  ],
+  "test_recordings": [
+    "chb01_20.edf",
+    "chb01_21.edf",
+    "chb01_25.edf",
+    "chb01_26.edf",
+    "chb01_27.edf"
+  ],
+  "train_interictal_ratio": 3.0,
+  "operating_threshold": -1.637016302026645,
+  "test_f1_optimal": {
+    "f1": 0.7618353969410051,
+    "precision": 0.7439544807965861,
+    "sensitivity": 0.7805970149253731,
+    "specificity": 0.8604651162790697,
+    "roc_auc": 0.86805507346986,
+    "pr_auc": 0.7478952965027637,
+    "false_positive_windows_per_hour": 100.46511627906976,
+    "threshold": -0.9476682622290433,
+    "n_windows": 1960,
+    "n_preictal": 670,
+    "true_positives": 523,
+    "true_negatives": 1110,
+    "false_positives": 180,
+    "false_negatives": 147,
+    "interictal_hours": 1.7916666666666667
+  }
+}

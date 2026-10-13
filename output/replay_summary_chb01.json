@@ -16,19 +16,19 @@
   "detected_preictal_episodes": 2,
   "preictal_episode_sensitivity": 1.0,
   "lead_times_minutes": {
-    "episode_1": 16.43,
-    "episode_2": 19.33
+    "episode_1": 23.77,
+    "episode_2": 27.75
   },
-  "average_lead_time_minutes": 17.88,
-  "raw_false_positive_windows": 187,
-  "raw_false_positive_windows_per_hour": 104.37,
-  "cep_consolidated_false_alarms": 2,
-  "cep_false_alarms_per_hour": 1.116,
-  "alarm_reduction_factor": 93.5,
-  "suppressed_refractory_windows": 418,
-  "total_alerts_fired": 4,
+  "average_lead_time_minutes": 25.76,
+  "raw_false_positive_windows": 180,
+  "raw_false_positive_windows_per_hour": 100.47,
+  "cep_consolidated_false_alarms": 4,
+  "cep_false_alarms_per_hour": 2.233,
+  "alarm_reduction_factor": 45.0,
+  "suppressed_refractory_windows": 789,
+  "total_alerts_fired": 6,
   "tier_counts": {
-    "silent_log": 0,
+    "silent_log": 2,
     "ehr_flag": 1,
     "clinician_notify": 3
   },

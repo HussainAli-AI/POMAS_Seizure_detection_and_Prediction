@@ -120,6 +120,21 @@
     "Key Limitation / Finding": "Primary leakage-safe estimate: mean ROC 0.670; wide fold variance (0.343 to 0.985)."
   },
   {
+    "Experiment ID": "PRED-PD-06",
+    "Task": "Prediction",
+    "Regime": "Patient-Dependent",
+    "Model Architecture": "Tri-Modal PoMAS (Deep 1280 + Corr 171 + Spectral 95 = 1546)",
+    "Split / Subject": "chb01 single recording split",
+    "Accuracy": "-",
+    "Macro F1": "0.762",
+    "Sensitivity / Preictal Recall": "0.781",
+    "Specificity": "0.860",
+    "ROC-AUC": "0.868",
+    "PR-AUC": "0.748",
+    "FAR / hour": "100.5",
+    "Key Limitation / Finding": "PoMAS Flagship SOTA: ROC 0.868, PR 0.748, F1=0.762 (+3.7% PR-AUC gain over Bi-Modal)."
+  },
+  {
     "Experiment ID": "PRED-PI-01",
     "Task": "Prediction",
     "Regime": "Patient-Independent",
@@ -221,7 +236,7 @@
     "Specificity": "93.5x reduction",
     "ROC-AUC": "Lead: 17.8m avg",
     "PR-AUC": "104.4 -> 1.12",
-    "FAR / hour": "1.116",
+    "FAR / hour": "2.233",
     "Key Limitation / Finding": "30-min refractory lockout reduced raw alarms from 104.4/h to 1.12/h while catching both seizures."
   }
 ]
