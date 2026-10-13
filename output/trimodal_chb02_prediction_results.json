@@ -1,0 +1,72 @@
+{
+  "subject": "chb02",
+  "model_architecture": "Tri-Modal Feature Fusion (EfficientNet-B0 + Correlation + Welch Spectral Bandpowers)",
+  "feature_dimensions": {
+    "deep_spatial_dim": 1280,
+    "correlation_connectivity_dim": 171,
+    "welch_spectral_bandpower_dim": 95,
+    "total_dim": 1546
+  },
+  "validation_metrics": {
+    "f1": 0.8461538461538461,
+    "precision": 0.7857142857142857,
+    "sensitivity": 0.9166666666666666,
+    "specificity": 0.9916666666666667,
+    "roc_auc": 0.9943287037037037,
+    "pr_auc": 0.8441985004970167,
+    "false_positive_windows_per_hour": 6.0,
+    "threshold": 0.14161212295503528,
+    "n_windows": 744,
+    "n_preictal": 24,
+    "true_positives": 22,
+    "true_negatives": 714,
+    "false_positives": 6,
+    "false_negatives": 2,
+    "interictal_hours": 1.0
+  },
+  "test_metrics": {
+    "f1": 0.05736636245110821,
+    "precision": 0.46808510638297873,
+    "sensitivity": 0.030555555555555555,
+    "specificity": 0.9736842105263158,
+    "roc_auc": 0.6247850877192983,
+    "pr_auc": 0.5210881434619238,
+    "false_positive_windows_per_hour": 18.947368421052634,
+    "threshold": 0.14161212295503528,
+    "n_windows": 1670,
+    "n_preictal": 720,
+    "true_positives": 22,
+    "true_negatives": 925,
+    "false_positives": 25,
+    "false_negatives": 698,
+    "interictal_hours": 1.3194444444444444
+  },
+  "test_f1_optimal": {
+    "f1": 0.6122270742358079,
+    "precision": 0.4464968152866242,
+    "sensitivity": 0.9736111111111111,
+    "specificity": 0.08526315789473685,
+    "roc_auc": 0.6247850877192983,
+    "pr_auc": 0.5210881434619238,
+    "false_positive_windows_per_hour": 658.6105263157895,
+    "threshold": -1.6488737330448804,
+    "n_windows": 1670,
+    "n_preictal": 720,
+    "true_positives": 701,
+    "true_negatives": 81,
+    "false_positives": 869,
+    "false_negatives": 19,
+    "interictal_hours": 1.3194444444444444
+  },
+  "validation_recordings": [
+    "chb02_14.edf",
+    "chb02_16.edf"
+  ],
+  "test_recordings": [
+    "chb02_16+.edf",
+    "chb02_19.edf",
+    "chb02_20.edf"
+  ],
+  "train_interictal_ratio": 3.0,
+  "operating_threshold": 0.14161212295503528
+}

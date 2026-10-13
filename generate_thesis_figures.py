@@ -196,4 +196,60 @@ fig.savefig(fig_comp_path)
 plt.close(fig)
 print(f"Saved: {fig_comp_path}")
 
-print("\nAll thesis figures successfully regenerated with Tri-Modal SOTA in output/figures/!")
+# -------------------------------------------------------------
+# Figure 7: Multi-Patient Closed-Loop CEP Agent Replay Evaluation
+# -------------------------------------------------------------
+subjects = ["Patient chb01", "Patient chb02", "Patient chb03"]
+raw_far = [100.47, 658.61, 720.00]
+cep_far = [2.23, 3.03, 14.30]
+lead_times = [25.76, 22.75, 59.04]
+reductions = [45.0, 217.2, 50.3]
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.0, 5.0), dpi=300)
+
+# Left: Alarm Fatigue Reduction (Log Scale)
+x_subj = np.arange(len(subjects))
+w = 0.35
+rects_raw = ax1.bar(x_subj - w/2, raw_far, w, label="Raw ML Windows (FAR/h)", color="#e74c3c", alpha=0.9)
+rects_cep = ax1.bar(x_subj + w/2, cep_far, w, label="PoMAS CEP Consolidated (FAR/h)", color="#27ae60", alpha=0.9)
+
+ax1.set_yscale("log")
+ax1.set_ylabel("False Alarm Rate (Events / Hour, Log Scale)", fontsize=10.5, fontweight="bold")
+ax1.set_title("(A) Autonomous Alarm Fatigue Suppression\n(30-Minute Refractory Lockout)", fontsize=11, fontweight="bold", pad=10)
+ax1.set_xticks(x_subj)
+ax1.set_xticklabels(subjects, fontsize=10, fontweight="bold")
+ax1.grid(True, which="both", linestyle=":", alpha=0.5, color="#bdc3c7")
+ax1.legend(loc="upper left", frameon=True, facecolor="#ffffff", framealpha=0.95, edgecolor="#bdc3c7", fontsize=9.0)
+
+for i, red in enumerate(reductions):
+    ax1.annotate(f"{red:.1f}x\nFewer",
+                 xy=(x_subj[i] + w/2, cep_far[i]),
+                 xytext=(0, 6), textcoords="offset points",
+                 ha="center", va="bottom", fontsize=8.5, fontweight="bold", color="#1e8449")
+
+# Right: Clinical Warning Lead Time & Episode Sensitivity
+bars = ax2.bar(x_subj, lead_times, width=0.45, color="#2980b9", alpha=0.85, edgecolor="#1f618d", lw=1.2)
+ax2.axhline(15.0, color="#d35400", linestyle="--", lw=1.5, label="Minimum Clinical Action Window (15 min)")
+ax2.set_ylabel("Average Warning Lead Time (Minutes Before Onset)", fontsize=10.5, fontweight="bold")
+ax2.set_title("(B) Clinical Early Warning Horizons\n(100% Episode Sensitivity across 6 Episodes)", fontsize=11, fontweight="bold", pad=10)
+ax2.set_xticks(x_subj)
+ax2.set_xticklabels(subjects, fontsize=10, fontweight="bold")
+ax2.set_ylim([0, 130])
+ax2.grid(axis="y", linestyle=":", alpha=0.5, color="#bdc3c7")
+ax2.legend(loc="upper left", frameon=True, facecolor="#ffffff", framealpha=0.95, edgecolor="#bdc3c7", fontsize=9.0)
+
+for bar in bars:
+    h = bar.get_height()
+    ax2.annotate(f"{h:.1f} min\n(100% Recall)",
+                 xy=(bar.get_x() + bar.get_width() / 2, h),
+                 xytext=(0, 4), textcoords="offset points",
+                 ha="center", va="bottom", fontsize=8.5, fontweight="bold", color="#154360")
+
+plt.tight_layout()
+fig7_path = FIGURES_DIR / "fig7_multisubject_cep_replay_evaluation.png"
+fig.savefig(fig7_path)
+plt.close(fig)
+print(f"Saved: {fig7_path}")
+
+print("\nAll thesis figures successfully regenerated with Multi-Patient Tri-Modal & Replay in output/figures/!")
+

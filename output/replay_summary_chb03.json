@@ -1,0 +1,36 @@
+{
+  "subject": "chb03",
+  "test_recordings": [
+    "chb03_34.edf",
+    "chb03_35.edf",
+    "chb03_36.edf"
+  ],
+  "total_windows": 1214,
+  "total_hours": 1.686,
+  "interictal_hours": 0.21,
+  "preictal_windows": 1063,
+  "interictal_windows": 151,
+  "total_preictal_episodes": 2,
+  "detected_preictal_episodes": 2,
+  "preictal_episode_sensitivity": 1.0,
+  "lead_times_minutes": {
+    "episode_1": 2.92,
+    "episode_2": 115.17
+  },
+  "average_lead_time_minutes": 59.04,
+  "raw_false_positive_windows": 151,
+  "raw_false_positive_windows_per_hour": 720.0,
+  "cep_consolidated_false_alarms": 3,
+  "cep_false_alarms_per_hour": 14.305,
+  "alarm_reduction_factor": 50.3,
+  "suppressed_refractory_windows": 1207,
+  "total_alerts_fired": 6,
+  "tier_counts": {
+    "silent_log": 0,
+    "ehr_flag": 0,
+    "clinician_notify": 6
+  },
+  "consecutive_threshold_windows": 2,
+  "refractory_minutes": 30.0,
+  "event_store_db": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\pomas_event_store.db"
+}

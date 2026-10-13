@@ -1,0 +1,72 @@
+{
+  "subject": "chb03",
+  "model_architecture": "Tri-Modal Feature Fusion (EfficientNet-B0 + Correlation + Welch Spectral Bandpowers)",
+  "feature_dimensions": {
+    "deep_spatial_dim": 1280,
+    "correlation_connectivity_dim": 171,
+    "welch_spectral_bandpower_dim": 95,
+    "total_dim": 1546
+  },
+  "validation_metrics": {
+    "f1": 0.7301066447908121,
+    "precision": 0.5749354005167958,
+    "sensitivity": 1.0,
+    "specificity": 0.0,
+    "roc_auc": 0.2149380144120761,
+    "pr_auc": 0.43743510109786227,
+    "false_positive_windows_per_hour": 720.0,
+    "threshold": -1.7041219662716665,
+    "n_windows": 774,
+    "n_preictal": 445,
+    "true_positives": 445,
+    "true_negatives": 0,
+    "false_positives": 329,
+    "false_negatives": 0,
+    "interictal_hours": 0.45694444444444443
+  },
+  "test_metrics": {
+    "f1": 0.9072727272727272,
+    "precision": 0.8777484608619174,
+    "sensitivity": 0.9388523047977423,
+    "specificity": 0.07947019867549669,
+    "roc_auc": 0.5346918941144954,
+    "pr_auc": 0.8906652413401912,
+    "false_positive_windows_per_hour": 662.7814569536424,
+    "threshold": -1.7041219662716665,
+    "n_windows": 1214,
+    "n_preictal": 1063,
+    "true_positives": 998,
+    "true_negatives": 12,
+    "false_positives": 139,
+    "false_negatives": 65,
+    "interictal_hours": 0.20972222222222223
+  },
+  "test_f1_optimal": {
+    "f1": 0.9336846728151076,
+    "precision": 0.8756177924217463,
+    "sensitivity": 1.0,
+    "specificity": 0.0,
+    "roc_auc": 0.5346918941144954,
+    "pr_auc": 0.8906652413401912,
+    "false_positive_windows_per_hour": 720.0,
+    "threshold": -2.4072054463609924,
+    "n_windows": 1214,
+    "n_preictal": 1063,
+    "true_positives": 1063,
+    "true_negatives": 0,
+    "false_positives": 151,
+    "false_negatives": 0,
+    "interictal_hours": 0.20972222222222223
+  },
+  "validation_recordings": [
+    "chb03_03.edf",
+    "chb03_04.edf"
+  ],
+  "test_recordings": [
+    "chb03_34.edf",
+    "chb03_35.edf",
+    "chb03_36.edf"
+  ],
+  "train_interictal_ratio": 3.0,
+  "operating_threshold": -1.7041219662716665
+}
