@@ -23,13 +23,23 @@ output/*/*.npz
 *.joblib
 *.pkl
 
-# Preserved experiment outputs (track reports and metric JSONs)
+# Preserved experiment outputs (track reports and metric JSONs, figures, summaries)
 !output/*.json
 !output/*/*.json
 !output/pdf/*.pdf
+!output/figures/*.png
+!output/*.csv
+!output/*.md
+
+# Databases & external models
+*.db
+*.sqlite
+*.sqlite3
+epilepsy_trained_model/
 
 # Temporary files
 tmp/
 *.log
 .DS_Store
 Thumbs.db
+

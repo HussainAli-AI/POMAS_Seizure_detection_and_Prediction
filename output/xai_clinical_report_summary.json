@@ -1,0 +1,22 @@
+[
+  {
+    "episode": 1,
+    "recording": "chb01_20.edf",
+    "risk_score": 0.9791,
+    "lead_time_minutes": 16.4,
+    "alert_tier": "clinician_notify",
+    "top_channel": "FP1-F7",
+    "top_channel_contribution": 5.66,
+    "figure": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\figures\\fig5_xai_clinical_report_episode1.png"
+  },
+  {
+    "episode": 2,
+    "recording": "chb01_26.edf",
+    "risk_score": 0.9826,
+    "lead_time_minutes": 19.3,
+    "alert_tier": "clinician_notify",
+    "top_channel": "FP1-F7",
+    "top_channel_contribution": 5.59,
+    "figure": "D:\\chb-mit-scalp-eeg-database-1.0.0\\pomas\\output\\figures\\fig6_xai_clinical_report_episode2.png"
+  }
+]
